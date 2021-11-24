@@ -4,47 +4,61 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Users server </title>
+        <title> The Dojo Message Board </title>
     </head>
     <body>
         <h1>
-            Welcome to the users server
+            The Dojo Message Board
         </h1>
-        <h2>
-            List of current users:
-        </h2>
+        <form method="POST" action="/newMessage">
+            <div>
+                <label for="name">
+                    name: 
+                </label>
+                <input type="text" id="name" name="name" />
+            </div>
+            <div>
+                <label for="message">
+                    message: 
+                </label>
+                <textarea name="message" id="message" cols="30" rows="10"></textarea>
+            </div>
+            <button type="submit">
+                Post Message
+            </button>
+        </form>
         <ul>
             <% for( let i = 0; i < users.length; i ++ ){ %>
                 <li>
-                    <%= users[i].firstName %> <%= users[i].lastName %>
+                    <%= users[i].name %> - <%= users[i].message %> 
                 </li>
+                <!-- <% for( let j = 0; j < users[i].comments.length; j ++ ){ %>
+                    <li>
+                        <%= users[i]comments[j].name %> - <%= users[i]comments[j].comment %>  %> 
+                    </li>
+
+                <% } %> -->
+                
+                <form method="POST" action="/newComment/<%= users[i].id%>">
+                    <div>
+                        <label for="name">
+                            name: 
+                        </label>
+                        <input type="text" id="name" name="name" />
+                    </div>
+                    <div>
+                        <label for="comment">
+                            comment: 
+                        </label>
+                        <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+                    </div>
+                    <button type="submit">
+                        Post Comment
+                    </button>
+                </form>
+                
             <% } %>
         </ul>
-        <h2>
-            Add new user:
-        </h2>
-        <form method="POST" action="/users/addUser">
-            <div>
-                <label for="firstName">
-                    First Name: 
-                </label>
-                <input type="text" id="firstName" name="firstName" />
-            </div>
-            <div>
-                <label for="lastName">
-                    Last Name: 
-                </label>
-                <input type="text" id="lastName" name="lastName" />
-            </div>
-            <div>
-                <label for="userId">
-                    Id: 
-                </label>
-                <input type="number" id="userId" name="userId" />
-            </div>
-            <button type="submit">
-                Add user
-            </button>
-        </form>
+
     </body>
 </html>
