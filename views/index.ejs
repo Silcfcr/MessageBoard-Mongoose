@@ -30,16 +30,19 @@
         <ul>
             <% for( let i = 0; i < users.length; i ++ ){ %>
                 <li>
-                    <%= users[i].name %> - <%= users[i].message %> 
+                    <%= users[i].name %> - <%= users[i].message %>
                 </li>
-                <!-- <% for( let j = 0; j < users[i].comments.length; j ++ ){ %>
-                    <li>
-                        <%= users[i]comments[j].name %> - <%= users[i]comments[j].comment %>  %> 
-                    </li>
-
-                <% } %> -->
+                    <ol>
+                        <% for( let j = 0; j < users[i].comments.length; j ++ ){ %>
+                        <li>
+                            <%= users[i].comments[j].name %> - <%= users[i].comments[j].comment %>
+                        </li>
+                        <% } %>
+                    </ol>
                 
-                <form method="POST" action="/newComment/<%= users[i].id%>">
+                    
+                <form method="POST" action="/newComment/">
+                    <label for=""><b>Add a comment</b></label>
                     <div>
                         <label for="name">
                             name: 
@@ -51,6 +54,7 @@
                             comment: 
                         </label>
                         <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+                        <input type="hidden" name="MessageId" value="<%= users[i].id%>">
                     </div>
                     <button type="submit">
                         Post Comment

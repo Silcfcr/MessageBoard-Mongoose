@@ -43,39 +43,24 @@ const MessageModel = {
     getMessages : function(){
         return Message.find();
     },
-    // getUserById : function( userId ){
-    //     return User.findOne({ id : userId });
-    // },
-    // removeAnimal : function(userId) {
-    //     console.log(userId);
-    //     return User.deleteOne({ id : userId })
-        
-    // },
-    // updateAnimal : function(userId) {
-    //     return User.updateOne({id: userId})
-    // }
+    getMessageById : function( userId ){
+        return User.findOne({ id : userId });
+    },
+    AddCommentToMessage : function(MessageId, newComment) {
+        return CommentModel.createComment(newComment)
+        .then( result => {
+            return Message.findByIdAndUpdate({_id: MessageId}, {$push: {comments: result}});
+        });
+    }
 }
 
 const CommentModel = {
-    createMessage : function( newComment ){
+    createComment : function( newComment ){
         return Comment.create( newComment );
-    },
-    // getUsers : function(){
-    //     return User.find();
-    // },
-    // getUserById : function( userId ){
-    //     return User.findOne({ id : userId });
-    // },
-    // removeAnimal : function(userId) {
-    //     console.log(userId);
-    //     return User.deleteOne({ id : userId })
-        
-    // },
-    // updateAnimal : function(userId) {
-    //     return User.updateOne({id: userId})
-    // }
-
-
+    }
 };
 
-module.exports = {MessageModel, CommentModel};
+module.exports = {MessageModel,
+    CommentModel,
+    CommentSchema,
+MessageSchema};

@@ -4,7 +4,7 @@ const mongoose = require( 'mongoose' );
 //if the db doesnt exist this will add it for us
 mongoose.connect('mongodb://localhost/message_board_db', {useNewUrlParser: true});
 
-const {MessageModel} = require( './models/Models' );
+const {MessageModel, CommentModel, CommentSchema, MessageSchema} = require( './models/Models' );
 // const {CommentModel} = require( './models/Models' );
 
 // This package is deprecated, use instead the jsonParser integrated within express
@@ -52,20 +52,20 @@ app.post( '/newMessage', function( request, response ){
     response.redirect( '/' );
 });
 
-app.post( '/newComment/:id', function( request, response ){
+app.post( '/newComment/', function( request, response ){
     console.log( request.body );
-    let id = Number( request.params.id );
+    const id = request.body.MessageId;
     const name = request.body.name;
-    const message = request.body.message;
+    const comment = request.body.comment;
 
     // Run validations to see if the 'id' is not already in the list
-    const newMessage = {
+    const newComment = {
         name,
-        message
+        comment
     };
-    console.log( newMessage );
+    console.log( newComment );
     MessageModel
-        .createMessage( newMessage )
+        .AddCommentToMessage(id, newComment)
         .then( result => {
             console.log( result );
         })
